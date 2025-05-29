@@ -31,12 +31,12 @@ Spring Boot приложение для управления задачами с
 
 1. Скачайте zip-архив с gitHub, распакуйте, запустите.
 2. Создайте .env файл (используйте свой секретный ключ - ссылка на генерацию ключа: https://www.random.org/strings/?num=1&len=32&digits=on&upperalpha=on&loweralpha=on&unique=on&format=html&rnd=new):
-text
-   DB_URL=jdbc:postgresql://db:5432/planning
-   DB_USERNAME=postgres
-   DB_PASSWORD=111
-   JWT_SECRET=сгенерированный ключ
-   JWT_EXPIRATION=36000000
+
+   ## DB_URL=jdbc:postgresql://db:5432/planning
+   ## DB_USERNAME=postgres
+   ## DB_PASSWORD=111
+   ## JWT_SECRET=сгенерированный ключ
+   ## JWT_EXPIRATION=36000000
 
 3. в терминале введите команду: docker-compose --env-file .env up --build 
 4. Приложение будет доступно по адресу: http://localhost:8080/swagger-ui/index.html
