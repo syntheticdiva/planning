@@ -51,7 +51,9 @@ POST /api/auth/login - вход
 
 ## Пользователь
 GET /api/users/{id} - получить пользователя по id
+
 PUT /api/users/{id} - обновить данные польззователя
+
 DELETE /api/users/{id} - удалить пользователя
 
 ## Задачи
