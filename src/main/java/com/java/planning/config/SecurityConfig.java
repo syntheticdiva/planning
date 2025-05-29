@@ -1,6 +1,7 @@
 package com.java.planning.config;
 
 import com.java.planning.security.JwtRequestFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,7 @@ public class SecurityConfig {
     private static final class SecurityConstants {
         private static final String[] PUBLIC_PATHS = {
                 "/api/auth/**",
+                "/error",
                 "/swagger-ui/**",
                 "/v3/api-docs/**",
                 "/webjars/**",
@@ -48,12 +50,18 @@ public class SecurityConfig {
                         .requestMatchers(SecurityConstants.PUBLIC_PATHS).permitAll()
                         .anyRequest().authenticated()
                 )
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .exceptionHandling(exceptions -> exceptions
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                        })
+                )
+                    .sessionManagement(session ->
+                            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                    .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+            return http.build();
+        }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
